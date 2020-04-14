@@ -32,9 +32,9 @@ denotions = [1, 3, 5, 7, 9, 12, 15, 17, 19, 21]
 guitar_length = 12
 
 def print_guitar(string, note):
-    guitar = [["{}x".format(_string) if string.upper() == note and _string == string else "{}|".format(_string)] + ["-"] * guitar_length for _string in strings]
-    fret_numbers = ["{:>2}".format(fret) if fret in denotions else "  " for fret in range(1 + min(max(denotions), guitar_length))]
-    start_index = [i for i in range(len(notes)) if string.upper() in notes[i]][0]
+    guitar = [["{:>2}x".format(_string) if string.upper() == note and _string == string else "{:>2}|".format(_string)] + ["-"] * guitar_length for _string in strings]
+    fret_numbers = [" "] + ["{:>2}".format(fret) if fret in denotions else "  " for fret in range(1 + min(max(denotions), guitar_length))]
+    start_index = [i for i in range(len(notes)) if string.capitalize() in notes[i]][0]
     for fret in range(1, 1 + guitar_length):
         if note in notes[(start_index + fret) % len(notes)]:
             guitar[strings.index(string)][fret] = "x"
