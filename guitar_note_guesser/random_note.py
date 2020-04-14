@@ -7,6 +7,7 @@ import os
 parser = argparse.ArgumentParser()
 parser.add_argument("-f", "--flats", help="Only show flat notes", action="store_true")
 parser.add_argument("-s", "--sharps", help="Only show sharp notes", action="store_true")
+parser.add_argument("-a", "--all", help="Show the note on all the strings", action="store_true")
 
 ARGS = parser.parse_args()
 
@@ -34,10 +35,11 @@ guitar_length = 12
 def print_guitar(string, note):
     guitar = [["{:>2}x".format(_string) if string.upper() == note and _string == string else "{:>2}|".format(_string)] + ["-"] * guitar_length for _string in strings]
     fret_numbers = [" "] + ["{:>2}".format(fret) if fret in denotions else "  " for fret in range(1 + min(max(denotions), guitar_length))]
-    start_index = [i for i in range(len(notes)) if string.capitalize() in notes[i]][0]
-    for fret in range(1, 1 + guitar_length):
-        if note in notes[(start_index + fret) % len(notes)]:
-            guitar[strings.index(string)][fret] = "x"
+    for string in strings if ARGS.all else [string]: 
+        start_index = [i for i in range(len(notes)) if string.capitalize() in notes[i]][0]
+        for fret in range(1, 1 + guitar_length):
+            if note in notes[(start_index + fret) % len(notes)]:
+                guitar[strings.index(string)][fret] = "x"
     print("".join(fret_numbers))
     print("\n".join([" ".join(string) for string in guitar]))
     print("".join(fret_numbers))
