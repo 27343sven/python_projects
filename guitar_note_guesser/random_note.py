@@ -5,9 +5,10 @@ import argparse
 import os
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-f", "--flats", help="Only show flat notes", action="store_true")
-parser.add_argument("-s", "--sharps", help="Only show sharp notes", action="store_true")
+parser.add_argument("-f", "--flats", help="Only show [f]lat notes", action="store_true")
+parser.add_argument("-s", "--sharps", help="Only show [s]harp notes", action="store_true")
 parser.add_argument("-a", "--all", help="Show the note on all the strings", action="store_true")
+parser.add_argument('-l', "--guitar-length", metavar='N', type=int, help="Length (number of frets) of the guitar", default=12)
 
 ARGS = parser.parse_args()
 
@@ -30,7 +31,7 @@ notes = [
 
 strings = ["E", "A", "D", "G", "B", "e"][::-1]
 denotions = [1, 3, 5, 7, 9, 12, 15, 17, 19, 21]
-guitar_length = 12
+guitar_length = ARGS.guitar_length
 
 def print_guitar(string, note):
     guitar = [["{:>2}x".format(_string) if string.upper() == note and _string == string else "{:>2}|".format(_string)] + ["-"] * guitar_length for _string in strings]
