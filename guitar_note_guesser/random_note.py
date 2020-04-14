@@ -29,16 +29,22 @@ notes = [
     ["G#", "Ab"]
 ]
 
+def guitar_numbers(n_frets):
+    for x in range(1, n_frets + 1):
+        if x % 12 in [0, 3, 5, 7, 9] or x == 1:
+            yield x
+        else:
+            continue
+
 strings = ["E", "A", "D", "G", "B", "e"][::-1]
-denotions = [1, 3, 5, 7, 9, 12, 15, 17, 19, 21]
-guitar_length = ARGS.guitar_length
+denotions = list(guitar_numbers(ARGS.guitar_length))
 
 def print_guitar(string, note):
-    guitar = [["{:>2}x".format(_string) if string.upper() == note and _string == string else "{:>2}|".format(_string)] + ["-"] * guitar_length for _string in strings]
-    fret_numbers = [" "] + ["{:>2}".format(fret) if fret in denotions else "  " for fret in range(1 + min(max(denotions), guitar_length))]
+    guitar = [["{:>2}x".format(_string) if string.upper() == note and _string == string else "{:>2}|".format(_string)] + ["-"] * ARGS.guitar_length for _string in strings]
+    fret_numbers = [" "] + ["{:>2}".format(fret) if fret in denotions else "  " for fret in range(1 + ARGS.guitar_length)]
     for string in strings if ARGS.all else [string]: 
         start_index = [i for i in range(len(notes)) if string.capitalize() in notes[i]][0]
-        for fret in range(1, 1 + guitar_length):
+        for fret in range(1, 1 + ARGS.guitar_length):
             if note in notes[(start_index + fret) % len(notes)]:
                 guitar[strings.index(string)][fret] = "x"
     print("".join(fret_numbers))
