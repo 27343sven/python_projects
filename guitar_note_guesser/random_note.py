@@ -5,10 +5,10 @@ import argparse
 import os
 
 parser = argparse.ArgumentParser()
+parser.add_argument("-a", "--all", help="Show the note on [a]ll the strings", action="store_true")
+parser.add_argument('-l', "--guitar-length", metavar='N', type=int, help="[l]ength; The number of frets on the guitar", default=12)
 parser.add_argument("-f", "--flats", help="Only show [f]lat notes", action="store_true")
 parser.add_argument("-s", "--sharps", help="Only show [s]harp notes", action="store_true")
-parser.add_argument("-a", "--all", help="Show the note on all the strings", action="store_true")
-parser.add_argument('-l', "--guitar-length", metavar='N', type=int, help="Length (number of frets) of the guitar", default=12)
 
 ARGS = parser.parse_args()
 
